@@ -59,9 +59,9 @@ Node *mul(), *term();
 Node *expr() {
   Node *lhs = mul();
 
-  if (tokens[pos].ty == TK_EOF || tokens[pos].ty == ')')
+//  if (tokens[pos].ty == TK_EOF || tokens[pos].ty == ')')
 //  if (tokens[pos].ty == TK_EOF)
-    return lhs;
+//    return lhs;
   if (tokens[pos].ty == '+') {
     pos++;
     return new_node('+', lhs, expr());
@@ -70,15 +70,16 @@ Node *expr() {
     pos++;
     return new_node('-', lhs, expr());
   }
-  error("想定しないトークンです(expr):",
-        tokens[pos].input);
+//  error("想定しないトークンです(expr):",
+//        tokens[pos].input);
+  return lhs;
 }
 
 Node *mul() {
   Node *lhs = term();
-  if (tokens[pos].ty == TK_EOF || tokens[pos].ty == ')')
+//  if (tokens[pos].ty == TK_EOF || tokens[pos].ty == ')')
 //  if (tokens[pos].ty == TK_EOF)
-    return lhs;
+//    return lhs;
   if (tokens[pos].ty == '*') {
     pos++;
     return new_node('*', lhs, mul());
@@ -102,7 +103,6 @@ Node *term() {
       error("開きカッコに対応する閉じカッコがありません:",
             tokens[pos].input);
     pos++; 
-//    error("term end","EOF");
     return node;
   }
   error("数値でも開きカッコでもないトークンです:",
