@@ -17,6 +17,19 @@ void tokenize(char *p) {
       continue;
     }
 
+    // 追加演算子　＝＝　！＝
+    if (*p == '=' || *p == '!') {
+      p++;
+      if (*p == '=') {
+        tokens[i].ty = TK_BIOP;
+        tokens[i].input = (p-1);
+        p++;
+        i++;
+        continue;
+      }
+      p--;
+    }
+
     if (*p == '+' || *p == '-' ||
         *p == '*' || *p == '/' ||
         *p == '(' || *p == ')' ||

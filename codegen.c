@@ -30,6 +30,32 @@ void gen(Node *node) {
     printf("  push rax\n");
     return;
   }
+/*
+  if (node->ty == ND_BIOP && node->name == '=') {
+  //  gen_lval(node->lhs);
+    gen(node->rhs);
+
+    printf("  POP rax\n");
+    printf("  POP rdi\n");
+    printf("  cmp rdi, rax\n");
+    printf("  sete al\n");
+    printf("  movzx rax, al\n");
+    printf("  push rax\n");
+    return;
+  }
+  if (node->ty == ND_BIOP && node->name == '!') {
+  //  gen_lval(node->lhs);
+    gen(node->rhs);
+
+    printf("  POP rax\n");
+    printf("  POP rdi\n");
+    printf("  cmp rdi, rax\n");
+    printf("  setne al\n");
+    printf("  movzx rax, al\n");
+    printf("  push rax\n");
+    return;
+  }
+*/
   if (node->ty == '=') {
     gen_lval(node->lhs);
     gen(node->rhs);
@@ -40,6 +66,7 @@ void gen(Node *node) {
     printf("  push rdi\n");
     return;
   }
+
   gen(node->lhs);
   gen(node->rhs);
 
@@ -60,6 +87,32 @@ void gen(Node *node) {
     printf("  mov rdx, 0\n");
     printf("  div rdi\n");
   }
+
+  if (node->ty == ND_BIOP && node->name == '=') {
+  //  gen_lval(node->lhs);
+//    gen(node->rhs);
+
+//    printf("  POP rax\n");
+//    printf("  POP rdi\n");
+    printf("  cmp rdi, rax\n");
+    printf("  sete al\n");
+    printf("  movzx rax, al\n");
+//    printf("  push rax\n");
+//    return;
+  }
+  if (node->ty == ND_BIOP && node->name == '!') {
+  //  gen_lval(node->lhs);
+//    gen(node->rhs);
+
+//    printf("  POP rax\n");
+//    printf("  POP rdi\n");
+    printf("  cmp rdi, rax\n");
+    printf("  setne al\n");
+    printf("  movzx rax, al\n");
+//    printf("  push rax\n");
+//    return;
+  }
+
 
   printf("  push rax\n");
 }

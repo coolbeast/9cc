@@ -36,6 +36,15 @@ Node *new_node_name(char name) {
   return node;
 }
 
+Node *new_node_biop(char op, Node *lhs, Node *rhs) {
+  Node *node = malloc(sizeof(Node));
+  node->ty = ND_BIOP;
+  node->name = op;
+  node->lhs = lhs;
+  node->rhs = rhs;
+  return node;
+}
+
 
 // 関数プロトタイプ宣言
 Node *assign(), *expr(), *mul(), *term();
@@ -58,6 +67,17 @@ Node *assign() {
 //    Node *lhs = assign();
     return lhs;
   }
+/*
+  if (tokens[pos].ty == TK_BIOP) {
+    if (tokens[pos].input[0] == '=') {
+      pos++;
+      return new_node_biop('=', lhs, expr());
+    } else {
+      pos++;
+      return new_node_biop('!', lhs, expr());
+    }
+  }
+*/
   if (tokens[pos].ty == '=') {
      pos++;
      return new_node('=', lhs, assign());
@@ -75,6 +95,15 @@ Node *expr() {
   if (tokens[pos].ty == '-') {
     pos++;
     return new_node('-', lhs, expr());
+  }
+  if (tokens[pos].ty == TK_BIOP) {
+    if (tokens[pos].input[0] == '=') {
+      pos++;
+      return new_node_biop('=', lhs, expr());
+    } else {
+      pos++;
+      return new_node_biop('!', lhs, expr());
+    }
   }
   return lhs;
 }
@@ -98,6 +127,7 @@ Node *term() {
     return new_node_num(tokens[pos++].val);
   if (tokens[pos].ty == TK_IDENT)
     return new_node_name(tokens[pos++].input[0]);
+
   if (tokens[pos].ty == '(') {
     pos++;
     Node *node = expr();
